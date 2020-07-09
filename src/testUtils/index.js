@@ -9,10 +9,14 @@ import { createMemoryHistory } from 'history';
 
 import AppLocale from 'locales';
 import createStore from 'testUtils/store';
+import httpClient, { applyAuthMiddleware } from 'services/httpClient';
 
-const renderWithProviders = (ui, { state = null, ...options } = {}) => {
+const renderWithProviders = (ui, { state = {}, ...options } = {}) => {
+  const store = createStore(state);
+  applyAuthMiddleware(httpClient, store);
+
   const Wrapper = ({ children }) => (
-    <Provider store={createStore(state)}>
+    <Provider store={store}>
       <IntlProvider locale="en" messages={flatten(AppLocale.en.messages)}>
         <BrowserRouter>{children}</BrowserRouter>
       </IntlProvider>

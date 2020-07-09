@@ -13,3 +13,5 @@ const createStoreHelper = (initialState) =>
     : createStore(rootReducer, enhancers);
 
 export default createStoreHelper;
+
+// TODO: delete this file

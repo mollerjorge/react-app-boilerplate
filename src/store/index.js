@@ -9,5 +9,11 @@ import rootReducer from 'reducers';
 const middleware = [thunk, promise];
 const enhancers = composeWithDevTools(applyMiddleware(...middleware));
 
-export const store = createStore(rootReducer, enhancers);
-export const persistor = persistStore(store);
+const configureStore = (initialState = {}) => {
+  const store = createStore(rootReducer, initialState, enhancers);
+  const persistor = persistStore(store);
+
+  return { store, persistor };
+};
+
+export default configureStore;
